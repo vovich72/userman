@@ -1,0 +1,18 @@
+version: '3.1'
+
+services:
+  postgres:
+    image: postgres
+    container_name: 'usr_postgres'
+    restart: always
+    command: ["postgres", "-c", "log_statement=all"]
+    environment:
+      - POSTGRES_DB=umanagdb
+      - POSTGRES_USER=umanagdba
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      - POSTGRES_PASSWORD=qwerty1
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./scripts/00-users.sql:/docker-entrypoint-initdb.d/00-users.sql:z
+      - ./scripts/01-schema-tables.sql:/docker-entrypoint-initdb.d/01-schema-tables.sql:z
